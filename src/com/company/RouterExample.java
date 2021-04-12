@@ -10,9 +10,7 @@ public class RouterExample {
     private JButton showPacketPath;
     private JTextField inputIpAddress;
     private JPanel panelMain;
-
-
-
+    private JLabel resultDestination;
 
 
     public static void main(String[] args) {
@@ -28,7 +26,7 @@ public class RouterExample {
         Destination interfaceZero = new Destination("135.46.56.0", 22, "Interface 0");
         Destination interfaceOne = new Destination("135.46.60.0", 22, "Interface 1");
         Destination routerOne = new Destination("192.53.40.0", 23,  "Router 1");
-        Destination defaultDestination = new Destination("Default", 0, "Default");
+        Destination defaultDestination = new Destination("Default", 0, "Default Gatewas(Router 2)");
 
         ArrayList<Destination> destinations = new ArrayList<Destination>();
 
@@ -40,10 +38,15 @@ public class RouterExample {
         showPacketPath.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                boolean foundMatch = false;
                 for (Destination d : destinations){
                     if (d.ipMatchesSubnet(inputIpAddress.getText())){
-                        break;
+                        resultDestination.setText(d.getName());
+                        foundMatch = true;
                     }
+                }
+                if (!foundMatch){
+                    resultDestination.setText(defaultDestination.getName());
                 }
             }
         });
